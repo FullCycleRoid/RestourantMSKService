@@ -1,0 +1,10 @@
+[
+  {"yandex_id": "seed-1", "name": "White Rabbit",        "address": "Смоленская пл., 3",      "rating": 4.9, "lat": 55.7480, "lon": 37.5830},
+  {"yandex_id": "seed-2", "name": "Pushkin Cafe",        "address": "Тверской бул., 26а",     "rating": 4.9, "lat": 55.7655, "lon": 37.6066},
+  {"yandex_id": "seed-3", "name": "Sakhalin",            "address": "Тверская, 15",           "rating": 4.9, "lat": 55.7625, "lon": 37.6080},
+  {"yandex_id": "seed-4", "name": "Selfie",              "address": "Новинский б-р, 31",      "rating": 4.9, "lat": 55.7570, "lon": 37.5840},
+  {"yandex_id": "seed-5", "name": "Saviva",              "address": "Б. Никитская, 7",        "rating": 4.9, "lat": 55.7570, "lon": 37.6080},
+  {"yandex_id": "seed-6", "name": "Ugolek",              "address": "Б. Никитская, 12",       "rating": 4.9, "lat": 55.7572, "lon": 37.6072},
+  {"yandex_id": "seed-7", "name": "Khachapuri",          "address": "Б. Грузинская, 12",      "rating": 4.9, "lat": 55.7680, "lon": 37.5895},
+  {"yandex_id": "seed-8", "name": "Lavkalavka",          "address": "Петровка, 21",           "rating": 4.9, "lat": 55.7670, "lon": 37.6195}
+]
