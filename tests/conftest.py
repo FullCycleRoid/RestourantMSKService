@@ -4,6 +4,7 @@ from collections.abc import AsyncIterator
 import pytest
 from httpx import ASGITransport, AsyncClient
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
+from sqlalchemy.pool import NullPool
 
 # Force test DB before importing anything from app
 os.environ["DATABASE_URL"] = os.environ.get(
@@ -24,7 +25,14 @@ def anyio_backend() -> str:
 
 @pytest.fixture(scope="session")
 def engine():
-    eng = create_async_engine(os.environ["DATABASE_URL"], future=True)
+    # NullPool disables connection pooling: each session opens its own
+    # asyncpg connection bound to the current event loop. Without this,
+    # pytest-asyncio's per-test function loop would inherit pooled
+    # connections bound to an earlier loop, raising
+    # "Future attached to a different loop".
+    eng = create_async_engine(
+        os.environ["DATABASE_URL"], future=True, poolclass=NullPool
+    )
     yield eng
 
 
