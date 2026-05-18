@@ -5,7 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Рестораны 4.9 в Садовом кольце</title>
   <link rel="stylesheet" href="/static/styles.css" />
-  <script src="https://api-maps.yandex.ru/v3/?apikey={{ yandex_js_api_key }}&lang=ru_RU"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 </head>
 <body>
   <aside class="sidebar">
@@ -39,6 +42,6 @@
 
   <main id="map"></main>
 
-  <script type="module" src="/static/app.js"></script>
+  <script src="/static/app.js"></script>
 </body>
 </html>

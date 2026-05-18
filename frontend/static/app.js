@@ -2,10 +2,8 @@ const $ = (sel) => document.querySelector(sel);
 
 const state = {
   map: null,
-  restaurantsLayer: null,
-  userPointsLayer: null,
-  ringLayer: null,
-  userPoints: new Map(), // id -> {marker, data}
+  mapsAvailable: false,
+  userPoints: new Map(), // id -> {marker|null, data}
 };
 
 async function fetchJSON(url, opts = {}) {
@@ -23,47 +21,59 @@ async function fetchJSON(url, opts = {}) {
 }
 
 async function init() {
-  if (typeof ymaps3 === "undefined") {
-    $("#map").innerHTML = '<div class="map-error">Карта недоступна (Yandex Maps не загрузился)</div>';
+  bindForm();
+  initMap();
+  try {
+    await Promise.all([loadRing(), loadRestaurants(), loadUserPoints()]);
+  } catch (e) {
+    alert(`Ошибка загрузки данных: ${e.message}`);
+  }
+}
+
+function initMap() {
+  if (typeof L === "undefined") {
+    $("#map").innerHTML =
+      '<div class="map-error">Карта недоступна (Leaflet не загрузился).<br>Сайдбар работает без карты.</div>';
+    state.mapsAvailable = false;
     return;
   }
-  await ymaps3.ready;
-  const { YMap, YMapDefaultSchemeLayer, YMapDefaultFeaturesLayer, YMapMarker, YMapFeature } = ymaps3;
-
-  state.map = new YMap($("#map"), {
-    location: { center: [37.6173, 55.7558], zoom: 12 },
-  });
-  state.map.addChild(new YMapDefaultSchemeLayer());
-  state.map.addChild(new YMapDefaultFeaturesLayer());
-
-  await Promise.all([loadRing(), loadRestaurants(), loadUserPoints()]);
-  bindForm();
+  state.map = L.map("map").setView([55.7558, 37.6173], 13);
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    maxZoom: 19,
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+  }).addTo(state.map);
+  state.mapsAvailable = true;
 }
 
 async function loadRing() {
   const feature = await fetchJSON("/api/garden-ring");
-  const { YMapFeature } = ymaps3;
-  const ringFeature = new YMapFeature({
-    geometry: feature.geometry,
+  if (!state.mapsAvailable) return;
+  L.geoJSON(feature, {
     style: {
-      stroke: [{ color: "#ff8a00", width: 3 }],
-      fill: "rgba(255, 138, 0, 0.10)",
+      color: "#ff8a00",
+      weight: 3,
+      fillColor: "#ff8a00",
+      fillOpacity: 0.1,
     },
-  });
-  state.map.addChild(ringFeature);
-  state.ringLayer = ringFeature;
+  }).addTo(state.map);
 }
 
 async function loadRestaurants() {
   const items = await fetchJSON("/api/restaurants");
   $("#rest-count").textContent = items.length;
-  const { YMapMarker } = ymaps3;
+  if (!state.mapsAvailable) return;
   for (const r of items) {
-    const el = document.createElement("div");
-    el.style.cssText = "width:14px;height:14px;background:#d23;border:2px solid #fff;border-radius:50%;box-shadow:0 0 3px rgba(0,0,0,0.4);cursor:pointer;";
-    el.title = `${r.name} ★${r.rating}\n${r.address || ""}`;
-    const m = new YMapMarker({ coordinates: [r.lon, r.lat] }, el);
-    state.map.addChild(m);
+    L.circleMarker([r.lat, r.lon], {
+      radius: 7,
+      color: "#fff",
+      weight: 2,
+      fillColor: "#d23",
+      fillOpacity: 1,
+    })
+      .bindPopup(
+        `<strong>${escapeHTML(r.name)}</strong> ★${r.rating}<br>${escapeHTML(r.address || "")}`
+      )
+      .addTo(state.map);
   }
 }
 
@@ -73,13 +83,20 @@ async function loadUserPoints() {
 }
 
 function addUserPointToUI(p) {
-  const { YMapMarker } = ymaps3;
-  const el = document.createElement("div");
-  el.style.cssText = "width:18px;height:18px;background:#2d7ff9;color:#fff;font-size:12px;line-height:18px;text-align:center;border:2px solid #fff;border-radius:50%;box-shadow:0 0 3px rgba(0,0,0,0.4);cursor:pointer;";
-  el.textContent = "★";
-  el.title = `${p.name || "(без имени)"} ${p.lat.toFixed(5)}, ${p.lon.toFixed(5)}`;
-  const marker = new YMapMarker({ coordinates: [p.lon, p.lat] }, el);
-  state.map.addChild(marker);
+  let marker = null;
+  if (state.mapsAvailable) {
+    const icon = L.divIcon({
+      className: "user-point-icon",
+      html: '<div class="user-point-marker">★</div>',
+      iconSize: [22, 22],
+      iconAnchor: [11, 11],
+    });
+    marker = L.marker([p.lat, p.lon], { icon })
+      .bindPopup(
+        `<strong>${escapeHTML(p.name || "(без имени)")}</strong><br>${p.lat.toFixed(5)}, ${p.lon.toFixed(5)}`
+      )
+      .addTo(state.map);
+  }
   state.userPoints.set(p.id, { marker, data: p });
   renderUserPointsList();
 }
@@ -87,7 +104,9 @@ function addUserPointToUI(p) {
 function removeUserPointFromUI(id) {
   const entry = state.userPoints.get(id);
   if (!entry) return;
-  state.map.removeChild(entry.marker);
+  if (entry.marker && state.mapsAvailable) {
+    state.map.removeLayer(entry.marker);
+  }
   state.userPoints.delete(id);
   renderUserPointsList();
 }
@@ -103,7 +122,7 @@ function renderUserPointsList() {
         <strong>${escapeHTML(data.name || "(без имени)")}</strong><br>
         <span class="meta">${data.lat.toFixed(5)}, ${data.lon.toFixed(5)}</span>
       </span>
-      <button type="button" data-id="${data.id}" title="Удалить">×</button>
+      <button type="button" title="Удалить">×</button>
     `;
     li.querySelector("button").addEventListener("click", () => deletePoint(data.id));
     ul.appendChild(li);
@@ -127,6 +146,9 @@ function bindForm() {
         body: JSON.stringify(body),
       });
       addUserPointToUI(created);
+      if (state.mapsAvailable) {
+        state.map.setView([created.lat, created.lon], state.map.getZoom());
+      }
       ev.target.reset();
     } catch (e) {
       alert(`Не удалось добавить точку: ${e.message}`);
@@ -144,7 +166,10 @@ async function deletePoint(id) {
 }
 
 function escapeHTML(s) {
-  return String(s).replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
+  return String(s).replace(
+    /[&<>"']/g,
+    (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])
+  );
 }
 
 init();

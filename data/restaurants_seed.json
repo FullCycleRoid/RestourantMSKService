@@ -1,10 +1,250 @@
 [
-  {"yandex_id": "seed-1", "name": "White Rabbit",        "address": "Смоленская пл., 3",      "rating": 4.9, "lat": 55.7480, "lon": 37.5830},
-  {"yandex_id": "seed-2", "name": "Pushkin Cafe",        "address": "Тверской бул., 26а",     "rating": 4.9, "lat": 55.7655, "lon": 37.6066},
-  {"yandex_id": "seed-3", "name": "Sakhalin",            "address": "Тверская, 15",           "rating": 4.9, "lat": 55.7625, "lon": 37.6080},
-  {"yandex_id": "seed-4", "name": "Selfie",              "address": "Новинский б-р, 31",      "rating": 4.9, "lat": 55.7570, "lon": 37.5840},
-  {"yandex_id": "seed-5", "name": "Saviva",              "address": "Б. Никитская, 7",        "rating": 4.9, "lat": 55.7570, "lon": 37.6080},
-  {"yandex_id": "seed-6", "name": "Ugolek",              "address": "Б. Никитская, 12",       "rating": 4.9, "lat": 55.7572, "lon": 37.6072},
-  {"yandex_id": "seed-7", "name": "Khachapuri",          "address": "Б. Грузинская, 12",      "rating": 4.9, "lat": 55.7680, "lon": 37.5895},
-  {"yandex_id": "seed-8", "name": "Lavkalavka",          "address": "Петровка, 21",           "rating": 4.9, "lat": 55.7670, "lon": 37.6195}
+  {
+    "yandex_id": "seed-1",
+    "name": "White Rabbit",
+    "address": "Смоленская пл., 3",
+    "rating": 4.9,
+    "lat": 55.748,
+    "lon": 37.583
+  },
+  {
+    "yandex_id": "seed-2",
+    "name": "Pushkin Cafe",
+    "address": "Тверской бул., 26а",
+    "rating": 4.9,
+    "lat": 55.7655,
+    "lon": 37.6066
+  },
+  {
+    "yandex_id": "seed-3",
+    "name": "Sakhalin",
+    "address": "Тверская, 15",
+    "rating": 4.9,
+    "lat": 55.7625,
+    "lon": 37.608
+  },
+  {
+    "yandex_id": "seed-4",
+    "name": "Selfie",
+    "address": "Новинский б-р, 31",
+    "rating": 4.9,
+    "lat": 55.7585,
+    "lon": 37.589
+  },
+  {
+    "yandex_id": "seed-5",
+    "name": "Saviva",
+    "address": "Б. Никитская, 7",
+    "rating": 4.9,
+    "lat": 55.757,
+    "lon": 37.608
+  },
+  {
+    "yandex_id": "seed-6",
+    "name": "Ugolek",
+    "address": "Б. Никитская, 12",
+    "rating": 4.9,
+    "lat": 55.7572,
+    "lon": 37.6072
+  },
+  {
+    "yandex_id": "seed-7",
+    "name": "Khachapuri",
+    "address": "Сретенский бул., 6",
+    "rating": 4.9,
+    "lat": 55.7693,
+    "lon": 37.6347
+  },
+  {
+    "yandex_id": "seed-8",
+    "name": "Lavkalavka",
+    "address": "Петровка, 21",
+    "rating": 4.9,
+    "lat": 55.767,
+    "lon": 37.6195
+  },
+  {
+    "yandex_id": "seed-9",
+    "name": "Twins Garden",
+    "address": "Страстной б-р, 8а",
+    "rating": 4.9,
+    "lat": 55.767,
+    "lon": 37.6087
+  },
+  {
+    "yandex_id": "seed-10",
+    "name": "Buro TSUM",
+    "address": "Петровка, 2",
+    "rating": 4.9,
+    "lat": 55.7605,
+    "lon": 37.6203
+  },
+  {
+    "yandex_id": "seed-11",
+    "name": "Beluga",
+    "address": "Моховая, 15/1",
+    "rating": 4.9,
+    "lat": 55.7549,
+    "lon": 37.6122
+  },
+  {
+    "yandex_id": "seed-12",
+    "name": "O2 Lounge",
+    "address": "Тверская, 3",
+    "rating": 4.9,
+    "lat": 55.7565,
+    "lon": 37.6132
+  },
+  {
+    "yandex_id": "seed-13",
+    "name": "Madame Wong",
+    "address": "Б. Лубянка, 17",
+    "rating": 4.9,
+    "lat": 55.7637,
+    "lon": 37.6266
+  },
+  {
+    "yandex_id": "seed-14",
+    "name": "Mendeleev",
+    "address": "Петровка, 20/1",
+    "rating": 4.9,
+    "lat": 55.7682,
+    "lon": 37.6175
+  },
+  {
+    "yandex_id": "seed-15",
+    "name": "Magadan",
+    "address": "Тверская, 11",
+    "rating": 4.9,
+    "lat": 55.7615,
+    "lon": 37.6066
+  },
+  {
+    "yandex_id": "seed-16",
+    "name": "Buono",
+    "address": "Смоленская, 8",
+    "rating": 4.9,
+    "lat": 55.748,
+    "lon": 37.584
+  },
+  {
+    "yandex_id": "seed-17",
+    "name": "Severyane",
+    "address": "Б. Никитская, 12",
+    "rating": 4.9,
+    "lat": 55.7574,
+    "lon": 37.6076
+  },
+  {
+    "yandex_id": "seed-18",
+    "name": "Probka на Цветном",
+    "address": "Цветной б-р, 2",
+    "rating": 4.9,
+    "lat": 55.7693,
+    "lon": 37.6209
+  },
+  {
+    "yandex_id": "seed-19",
+    "name": "Bjorn",
+    "address": "Пятницкая, 3",
+    "rating": 4.9,
+    "lat": 55.743,
+    "lon": 37.6242
+  },
+  {
+    "yandex_id": "seed-20",
+    "name": "Tatar",
+    "address": "Тверская, 22",
+    "rating": 4.9,
+    "lat": 55.7677,
+    "lon": 37.6021
+  },
+  {
+    "yandex_id": "seed-21",
+    "name": "Loona",
+    "address": "Б. Лубянка, 19",
+    "rating": 4.9,
+    "lat": 55.7615,
+    "lon": 37.6285
+  },
+  {
+    "yandex_id": "seed-22",
+    "name": "Sage",
+    "address": "Камергерский пер., 5",
+    "rating": 4.9,
+    "lat": 55.7607,
+    "lon": 37.6133
+  },
+  {
+    "yandex_id": "seed-23",
+    "name": "Северяне",
+    "address": "Б. Никитская, 12",
+    "rating": 4.9,
+    "lat": 55.7575,
+    "lon": 37.608
+  },
+  {
+    "yandex_id": "seed-25",
+    "name": "Maya",
+    "address": "Б. Якиманка, 26",
+    "rating": 4.9,
+    "lat": 55.7385,
+    "lon": 37.6191
+  },
+  {
+    "yandex_id": "seed-26",
+    "name": "Sartoria Lamberti",
+    "address": "Поварская, 8/1",
+    "rating": 4.9,
+    "lat": 55.7565,
+    "lon": 37.5953
+  },
+  {
+    "yandex_id": "seed-27",
+    "name": "Cook'kareku",
+    "address": "Б. Никитская, 22/2",
+    "rating": 4.9,
+    "lat": 55.7574,
+    "lon": 37.602
+  },
+  {
+    "yandex_id": "seed-28",
+    "name": "Ovsyanka",
+    "address": "М. Гнездниковский, 12",
+    "rating": 4.9,
+    "lat": 55.7626,
+    "lon": 37.608
+  },
+  {
+    "yandex_id": "seed-30",
+    "name": "Жирок",
+    "address": "Тверская, 20",
+    "rating": 4.9,
+    "lat": 55.767,
+    "lon": 37.6037
+  },
+  {
+    "yandex_id": "seed-31",
+    "name": "Buddy",
+    "address": "Тверская, 13",
+    "rating": 4.9,
+    "lat": 55.7634,
+    "lon": 37.608
+  },
+  {
+    "yandex_id": "seed-32",
+    "name": "Aist",
+    "address": "М. Бронная, 8/1",
+    "rating": 4.9,
+    "lat": 55.7634,
+    "lon": 37.597
+  },
+  {
+    "yandex_id": "seed-33",
+    "name": "Marani",
+    "address": "Тверской б-р, 17",
+    "rating": 4.9,
+    "lat": 55.7658,
+    "lon": 37.601
+  }
 ]

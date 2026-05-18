@@ -68,3 +68,16 @@ body { display: flex; }
   color: #b00;
   font-weight: bold;
 }
+
+.user-point-marker {
+  width: 22px;
+  height: 22px;
+  background: #2d7ff9;
+  color: #fff;
+  font-size: 13px;
+  line-height: 18px;
+  text-align: center;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
+}
