@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Рестораны 4.9 в Садовом кольце</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+  <script src="https://api-maps.yandex.ru/v3/?apikey={{ yandex_js_api_key }}&lang=ru_RU"></script>
+</head>
+<body>
+  <aside class="sidebar">
+    <header>
+      <h1>Рестораны 4.9</h1>
+      <p class="subtitle">в Садовом кольце</p>
+      <p class="counter">Найдено: <span id="rest-count">…</span></p>
+    </header>
+
+    <section class="form-block">
+      <h2>Добавить точку</h2>
+      <form id="add-point-form">
+        <label>Название (опц.)
+          <input type="text" name="name" maxlength="100" />
+        </label>
+        <label>Широта (lat)
+          <input type="number" name="lat" step="0.000001" min="-90" max="90" required />
+        </label>
+        <label>Долгота (lon)
+          <input type="number" name="lon" step="0.000001" min="-180" max="180" required />
+        </label>
+        <button type="submit">Добавить</button>
+      </form>
+    </section>
+
+    <section class="list-block">
+      <h2>Мои точки (<span id="points-count">0</span>)</h2>
+      <ul id="user-points-list"></ul>
+    </section>
+  </aside>
+
+  <main id="map"></main>
+
+  <script type="module" src="/static/app.js"></script>
+</body>
+</html>
