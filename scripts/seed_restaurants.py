@@ -6,30 +6,23 @@ from __future__ import annotations
 
 import asyncio
 import json
-import sys
 from decimal import Decimal
 from pathlib import Path
 
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
-if str(PROJECT_ROOT) not in sys.path:
-    sys.path.insert(0, str(PROJECT_ROOT))
+from sqlalchemy import select
+from sqlalchemy.dialects.postgresql import insert
 
-from sqlalchemy import select  # noqa: E402
-from sqlalchemy.dialects.postgresql import insert  # noqa: E402
+from app.db import session_scope
+from app.geo import GardenRing
+from app.models import Restaurant
 
-from app.db import session_scope  # noqa: E402
-from app.geo import GardenRing  # noqa: E402
-from app.models import Restaurant  # noqa: E402
-
-SEED_PATH = PROJECT_ROOT / "data" / "restaurants_seed.json"
+SEED_PATH = Path(__file__).resolve().parent.parent / "data" / "restaurants_seed.json"
 
 
 async def run() -> None:
     ring = GardenRing.load_default()
     items = json.loads(SEED_PATH.read_text(encoding="utf-8"))
 
-    inserted = 0
-    updated = 0
     skipped = 0
 
     async with session_scope() as session:
@@ -65,11 +58,8 @@ async def run() -> None:
                         "lon": lon,
                     },
                 )
-                .returning(Restaurant.id, Restaurant.created_at)
             )
-            res = await session.execute(stmt)
-            row = res.one()
-            _ = row
+            await session.execute(stmt)
 
         await session.commit()
 
