@@ -18,6 +18,31 @@ Open http://localhost:8000
 
 ## Tests
 
+The `docker compose up -d` step creates two databases via `docker/init-test-db.sql`:
+`app` (for the running service) and `app_test` (for pytest). The `alembic upgrade head`
+above only migrates `app`; run the migration once against the test DB too:
+
 ```
+DATABASE_URL=postgresql+asyncpg://app:app@localhost:5433/app_test alembic upgrade head
 pytest
+```
+
+## Endpoints
+
+- `GET /` — index page (map + sidebar)
+- `GET /api/garden-ring` — Garden Ring polygon as GeoJSON Feature
+- `GET /api/restaurants` — list of restaurants inside the ring with rating ≥ 4.9
+- `GET /api/user-points` — list of user-pinned points
+- `POST /api/user-points` — create a point `{lat, lon, name?}`
+- `DELETE /api/user-points/{id}` — delete a point
+
+## Project layout
+
+```
+app/         FastAPI application (routers, models, geo, config)
+alembic/     Database migrations
+scripts/     Data seeding (static fixtures + optional Yandex geocoder)
+frontend/    Static HTML/CSS/JS served at /
+tests/       Pytest suite (unit + router integration)
+docker/      Postgres init scripts
 ```
